@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: "3.14"
           cache: pip
       - name: install dependencies
         run: |
@@ -23,12 +23,12 @@ jobs:
           flake8 --exclude=venv* --statistics
 
 
-  matrix_tests: # Ejecutar tests
+  matrix_tests: # Ejecutar tests en diferentes versiones de Python
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false # Si falla una version, las demas siguen
       matrix: 
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -38,6 +38,6 @@ jobs:
       - name: install dependencies
         run: |
           pip install -r requirements.txt
-      - name: run tests
+      - name: run tests with coverage
         run: |
-          pytest -v
+          --cov=saludar --cov-report=term-missing --cov-fail-under=80

@@ -34,7 +34,7 @@ def saludar_segun_idioma(idioma: str) -> str:
     return SALUDOS[idioma]
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     saludo = random.randint(0, 2)
 
     if saludo == 0:
