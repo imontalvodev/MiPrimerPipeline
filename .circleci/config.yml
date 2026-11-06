@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7
+      - image: cimg/python:3.7
 
     working_directory: ~/repo
 
@@ -16,7 +16,7 @@ jobs:
           command: |
             python3 -m venv venv
             source venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r requirements.txt "importlib-metadata==4.13.0"
       # Step 3: ejecutamos linters y flake8 y lanzamos casos de prueba
       - run:
           name: run tests
