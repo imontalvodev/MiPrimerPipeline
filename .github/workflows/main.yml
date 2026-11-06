@@ -18,19 +18,23 @@ jobs:
       - name: install dependencies
         run: |
           pip install -r requirements.txt
-      - name: run tests
+      - name: run flake8
         run: |
           flake8 --exclude=venv* --statistics
 
 
-  test: # Ejecutar tests
+  matrix_tests: # Ejecutar tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Si falla una version, las demas siguen
+      matrix: 
+        python-version: ["3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
           cache: pip
+          python-version: ${{ matrix.python-version }}
       - name: install dependencies
         run: |
           pip install -r requirements.txt
