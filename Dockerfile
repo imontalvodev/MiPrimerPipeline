@@ -1,8 +1,8 @@
-FROM alpine:3.12
+FROM python:3.13-slim
 
 WORKDIR /myfirstpipeline
 
-ADD . /myfirstpipeline
+COPY saludar.py .
 
-RUN apk add python3
+CMD [ "python", "saludar.py" ]
 

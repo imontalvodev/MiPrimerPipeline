@@ -57,3 +57,24 @@ jobs:
       - name: run security Analisis
         run: |
           bandit -r saludar.py
+  
+
+  docker: # CD
+    runs-on: ubuntu-latest
+    needs: [lint, matrix_tests, security]
+    if: github.event_name == 'push' && github.ref_name == 'main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_PWD }}
+      - name: Publish to docker hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: imontalvodev/mi-primer-pipeline:latest
+
+      
